@@ -1,0 +1,174 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="ddl_create_table_author" author="yosra">
+        <createTable tableName="AUTHORS">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="CPK_AUTHOR_TABLE" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR2(100)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="description" type="VARCHAR2(250)">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+    </changeSet>
+    <changeSet id="ddl_create_table_book" author="yosra">
+        <createTable tableName="BOOKS">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="CPK_BOOK_TABLE" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR2(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="isbn" type="VARCHAR2(50)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="serial_name" type="VARCHAR2(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR2(250)">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+    </changeSet>
+    <changeSet id="ddl_create_table_books_authors" author="yosra">
+        <createTable tableName="BOOKS_AUTHORS">
+            <column name="book_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="CPK_BOOKS_AUTHORS_BOOK_ID" nullable="false"/>
+            </column>
+            <column name="author_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="CPK_BOOKS_AUTHORS_AUTHOR_ID" nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint
+                constraintName="FK_AUTHOR_BOOK"
+                referencedTableName="BOOKS"
+                baseColumnNames="BOOK_ID"
+                baseTableName="BOOKS_AUTHORS" referencedColumnNames="id"/>
+        <addForeignKeyConstraint
+                constraintName="FK_BOOK_AUTHOR"
+                referencedTableName="AUTHORS"
+                baseColumnNames="AUTHOR_ID"
+                baseTableName="BOOKS_AUTHORS" referencedColumnNames="id"/>
+    </changeSet>
+    <changeSet id="ddl_create_table_category" author="yosra">
+        <createTable tableName="CATEGORIES">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="CPK_CATEGORY_TABLE" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR2(50)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="ddl_create_table_books_categories" author="yosra">
+        <createTable tableName="BOOKS_CATEGORIES">
+            <column name="book_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="CPK_BOOKS_CATEGORIES_BOOK_ID" nullable="false"/>
+            </column>
+            <column name="category_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="CPK_BOOKS_CATEGORIES_CATEGORY_ID" nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint
+                constraintName="FK_BOOK_CATEGORY"
+                referencedTableName="BOOKS"
+                baseColumnNames="BOOK_ID"
+                baseTableName="BOOKS_CATEGORIES" referencedColumnNames="id"/>
+        <addForeignKeyConstraint
+                constraintName="FK_CATEGORY_BOOK"
+                referencedTableName="CATEGORIES"
+                baseColumnNames="CATEGORY_ID"
+                baseTableName="BOOKS_CATEGORIES" referencedColumnNames="id"/>
+    </changeSet>
+    <changeSet id="ddl_create_table_publisher" author="yosra">
+        <createTable tableName="PUBLISHERS">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="CPK_PUBLISHER_TABLE" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR2(100)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="ddl_create_table_role" author="yosra">
+        <createTable tableName="ROLES">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="CPK_ROLE_TABLE" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR2(100)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+
+    </changeSet>
+    <changeSet id="ddl_create_table_books_publishers" author="yosra">
+        <createTable tableName="BOOKS_PUBLISHERS">
+            <column name="book_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="CPK_BOOKS_PUBLISHERS_BOOK_ID" nullable="false"/>
+            </column>
+            <column name="publisher_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="CPK_BOOKS_PUBLISHERS_PUBLISHER_ID" nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint
+                constraintName="FK_BOOK_PUBLISHER"
+                referencedTableName="BOOKS"
+                baseColumnNames="BOOK_ID"
+                baseTableName="BOOKS_PUBLISHERS" referencedColumnNames="id"/>
+        <addForeignKeyConstraint
+                constraintName="FK_PUBLISHER_BOOK"
+                referencedTableName="PUBLISHERS"
+                baseColumnNames="PUBLISHER_ID"
+                baseTableName="BOOKS_PUBLISHERS" referencedColumnNames="id"/>
+    </changeSet>
+    <changeSet id="ddl_create_table_user" author="yosra">
+        <createTable tableName="USERS">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="CPK_USER_TABLE" nullable="false"/>
+            </column>
+            <column name="first_name" type="VARCHAR2(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR2(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR2(50)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="password" type="VARCHAR2(100)" >
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+    </changeSet>
+    <changeSet id="ddl_create_table_users_roles" author="yosra">
+        <createTable tableName="USERS_ROLES">
+            <column name="user_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="CPK_USER_ID_TABLE" nullable="false"/>
+            </column>
+            <column name="role_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="CPK_ROLE_ID_TABLE" nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint
+                constraintName="FK_USER_ROLE"
+                referencedTableName="ROLES"
+                baseColumnNames="ROLE_ID"
+                baseTableName="USERS_ROLES" referencedColumnNames="id"/>
+        <addForeignKeyConstraint
+                constraintName="FK_ROLE_USER"
+                referencedTableName="USERS"
+                baseColumnNames="USER_ID"
+                baseTableName="USERS_ROLES" referencedColumnNames="id"/>
+    </changeSet>
+    <changeSet id="ddl_sequence_table" author="yosra">
+        <createSequence sequenceName="id_seq" startValue="1" incrementBy="50"/>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,60 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet  author="yosra"  id="insert-book-1">
+        <insert tableName="BOOKS">
+            <column  name="id"  valueSequenceNext="id_seq"/>
+            <column  name="name"  value="AP1287"/>
+            <column name="isbn" value="AP1287"/>
+            <column  name="serial_name"  value="CXEF12389"/>
+            <column  name="description"  value="Book description"/>
+        </insert>
+        <insert tableName="AUTHORS">
+            <column  name="id"  valueSequenceNext="id_seq"/>
+            <column  name="name"  value="Matt"/>
+            <column  name="description"  value="dummy description"/>
+        </insert>
+        <insert tableName="CATEGORIES">
+            <column  name="id"  valueSequenceNext="id_seq"/>
+            <column  name="name"  value="dummy category"/>
+        </insert>
+        <insert tableName="PUBLISHERS">
+            <column  name="id"  valueSequenceNext="id_seq"/>
+            <column  name="name"  value="dummy publisher"/>
+        </insert>
+    </changeSet>
+    <changeSet  author="yosra"  id="insert-user-1">
+        <insert tableName="USERS">
+            <column  name="id"  valueSequenceNext="id_seq"/>
+            <column  name="first_name"  value="admin"/>
+            <column name="last_name" value="admin"/>
+            <column  name="email"  value="admin@admin.in"/>
+            <column name="password" value="$2a$10$JhNE/KYSZ1ljuFwY7BSmR.TdmALKOemD2GXsciNvZ3cTQ2QudLkF."/>
+        </insert>
+        <insert tableName="ROLES">
+            <column  name="id"  valueSequenceNext="id_seq"/>
+            <column  name="name"  value="admin"/>
+        </insert>
+    </changeSet>
+    <changeSet  author="yosra"  id="insert-reference-1">
+        <insert tableName="USERS_ROLES">
+            <column  name="user_id"  valueComputed="(SELECT id from USERS where email='admin@admin.in')"/>
+            <column  name="role_id"  valueComputed="(SELECT id from ROLES where name='admin')"/>
+        </insert>
+        <insert tableName="BOOKS_PUBLISHERS">
+            <column  name="book_id"  valueComputed="(SELECT id from BOOKS where isbn='AP1287')"/>
+            <column  name="publisher_id"  valueComputed="(SELECT id from PUBLISHERS where name='dummy publisher')"/>
+        </insert>
+        <insert tableName="BOOKS_CATEGORIES">
+            <column  name="book_id"  valueComputed="(SELECT id from BOOKS where isbn='AP1287')"/>
+            <column  name="category_id"  valueComputed="(SELECT id from CATEGORIES where name='dummy category')"/>
+        </insert>
+        <insert tableName="BOOKS_AUTHORS">
+            <column  name="book_id"  valueComputed="(SELECT id from BOOKS where isbn='AP1287')"/>
+            <column  name="author_id"  valueComputed="(SELECT id from AUTHORS where name='Matt')"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

@@ -3,22 +3,17 @@ package com.knf.dev.librarymanagementsystem.entity;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "authors")
 public class Author {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@SequenceGenerator(
+			name = "id_seq",
+			sequenceName = "id_seq")
+	@GeneratedValue(strategy = GenerationType.AUTO,generator = "id_seq")
 	private Long id;
 
 	@Column(name = "name", length = 100, nullable = false, unique = true)
